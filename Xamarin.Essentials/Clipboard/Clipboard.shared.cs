@@ -5,6 +5,9 @@ namespace Xamarin.Essentials
 {
     public static partial class Clipboard
     {
+        public static Task SetImageAsync(string b64Image)
+            => PlatformSetImageAsync(b64Image);
+
         public static Task SetTextAsync(string text)
             => PlatformSetTextAsync(text ?? string.Empty);
 
