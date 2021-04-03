@@ -4,6 +4,9 @@ namespace Xamarin.Essentials
 {
     public static partial class Clipboard
     {
+        static Task PlatformSetImageAsync(string b64Img)
+            => throw ExceptionUtils.NotSupportedOrImplementedException;
+
         static Task PlatformSetTextAsync(string text)
             => throw ExceptionUtils.NotSupportedOrImplementedException;
 
