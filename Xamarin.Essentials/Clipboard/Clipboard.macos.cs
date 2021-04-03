@@ -7,16 +7,26 @@ namespace Xamarin.Essentials
 {
     public static partial class Clipboard
     {
-        static readonly string pasteboardType = NSPasteboard.NSPasteboardTypeString;
-        static readonly string[] pasteboardTypes = { pasteboardType };
+        static readonly string pasteboardStringType = NSPasteboard.NSPasteboardTypeString;
+        static readonly string pasteboardPNGType = NSPasteboard.NSPasteboardTypePNG;
+
+        static readonly string[] pasteboardTypes = { pasteboardStringType, pasteboardPNGType };
 
         static NSPasteboard Pasteboard => NSPasteboard.GeneralPasteboard;
+
+        static Task PlatformSetImageAsync(string b64Img)
+        {
+            Pasteboard.DeclareTypes(pasteboardTypes, null);
+            Pasteboard.ClearContents();
+            Pasteboard.SetDataForType(new NSData(b64Img, NSDataBase64DecodingOptions.None), pasteboardPNGType);
+            return Task.CompletedTask;
+        }
 
         static Task PlatformSetTextAsync(string text)
         {
             Pasteboard.DeclareTypes(pasteboardTypes, null);
             Pasteboard.ClearContents();
-            Pasteboard.SetStringForType(text, pasteboardType);
+            Pasteboard.SetStringForType(text, pasteboardStringType);
 
             return Task.CompletedTask;
         }

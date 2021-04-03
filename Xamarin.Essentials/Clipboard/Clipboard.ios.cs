@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CoreGraphics;
 using Foundation;
 using UIKit;
 
@@ -7,6 +8,14 @@ namespace Xamarin.Essentials
 {
     public static partial class Clipboard
     {
+        static Task PlatformSetImageAsync(string b64Img)
+        {
+            var uiImg = new UIImage(new NSData(b64Img, NSDataBase64DecodingOptions.None));
+            UIPasteboard.General.Image = uiImg;
+
+            return Task.CompletedTask;
+        }
+
         static Task PlatformSetTextAsync(string text)
         {
             UIPasteboard.General.String = text;
